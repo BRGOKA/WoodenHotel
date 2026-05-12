@@ -51,6 +51,7 @@ const Button = styled.button`
 font-size: 1.4rem;
 padding: 1.2rem 1.6rem;
 font-weight: 500;
+margin: 1.2rem 1.6rem;
 border: none;
 border-radius: var(--border-radius-sm);
 background-color: var(--color-brand-500);
