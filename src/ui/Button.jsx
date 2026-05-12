@@ -57,5 +57,9 @@ background-color: var(--color-brand-500);
 color: var(--color-brand-50);
 cursor: pointer;
 box-shadow: var(--shadow-sm);
+&:hover{
+  
+background-color: var(--color-brand-700);
+}
 `
 export default Button
