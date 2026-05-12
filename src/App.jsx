@@ -20,8 +20,8 @@ function App() {
       <Heading as="h1" >Wooden Hotel</Heading>
       <div>
       <Heading as="h2">Check In and out</Heading>
-      <Button>Check-In</Button>
-      <Button>Check-Out</Button>
+      <Button >Check-In</Button>
+      <Button variation='secondary' size='small'>Check-Out</Button>
       </div>
       </Row>
 <Row type='vertical'>
