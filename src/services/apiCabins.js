@@ -16,3 +16,9 @@ export async function deleteCabin(id) {
     throw new Error("Cabin couldnt be deleted");
   }
 }
+export async function addCabin(cabinData) {
+  const { data, error } = await supabase
+    .from("cabin")
+    .insert([{ id: "someValue", other_column: "otherValue" }])
+    .select();
+}
