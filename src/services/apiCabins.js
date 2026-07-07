@@ -27,3 +27,14 @@ export async function addCabin(newCabin) {
     throw new Error("Cabin couldnt be created");
   }
 }
+// export async function editCabin(cabinData) {
+//   const { data, error } = await supabase
+//     .from("cabin")
+//     .insert([newCabin])
+//     .select();
+
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Cabin couldnt be created");
+//   }
+// }
