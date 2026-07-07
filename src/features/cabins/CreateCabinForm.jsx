@@ -6,6 +6,7 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
+import { addCabin } from "../../services/apiCabins";
 
 const FormRow = styled.div`
   display: grid;
@@ -45,8 +46,13 @@ const Error = styled.span`
 
 function CreateCabinForm() {
   const { register, handleSubmit } = useForm();
+
+  function onSubmit(data) {
+    console.log(data);
+    addCabin(data);
+  }
   return (
-    <Form onSubmit={handleSubmit()}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input type="text" id="name" {...register("name")} />
@@ -92,7 +98,7 @@ function CreateCabinForm() {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Edit cabin</Button>
+        <Button>Add cabin</Button>
       </FormRow>
     </Form>
   );
