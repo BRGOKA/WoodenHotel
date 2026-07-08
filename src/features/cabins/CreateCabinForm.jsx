@@ -49,12 +49,11 @@ const Error = styled.span`
 function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
-  console.log(errors);
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
     mutationFn: addCabin,
     onSuccess: () => {
-      toast.success("new cabin created succesfully");
+      toast.success("new cabin created successfully");
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
       reset();
     },
@@ -62,11 +61,13 @@ function CreateCabinForm() {
   });
 
   function onSubmit(data) {
-    mutate({ data, image: data.image.at(0) });
+    mutate({ data, image: data.image[0] });
   }
-  function onError(msg) {
-    // toast.
+
+  function onError() {
+    toast.error("Please fix the highlighted fields");
   }
+
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow>
@@ -94,7 +95,9 @@ function CreateCabinForm() {
             min: { value: 1, message: "capacity should at least be 1" },
           })}
         />
-        {errors?.name?.message && <Error>{errors.name.message}</Error>}
+        {errors?.maxCapacity?.message && (
+          <Error>{errors.maxCapacity.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -108,7 +111,9 @@ function CreateCabinForm() {
             min: { value: 1, message: "price should at least be 1" },
           })}
         />
-        {errors?.name?.message && <Error>{errors.name.message}</Error>}
+        {errors?.regularPrice?.message && (
+          <Error>{errors.regularPrice.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -125,19 +130,20 @@ function CreateCabinForm() {
               "the discount should be less than the regular price",
           })}
         />
-        {errors?.name?.message && <Error>{errors.name.message}</Error>}
+        {errors?.discount?.message && <Error>{errors.discount.message}</Error>}
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="descreption">Description for website</Label>
+        <Label htmlFor="description">Description for website</Label>
         <Textarea
-          type="number"
           id="description"
           defaultValue=""
           disabled={isLoading}
-          {...register("descreption", { required: "this field is required" })}
+          {...register("description", { required: "this field is required" })}
         />
-        {errors?.name?.message && <Error>{errors.name.message}</Error>}
+        {errors?.description?.message && (
+          <Error>{errors.description.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -146,9 +152,10 @@ function CreateCabinForm() {
           id="image"
           accept="image/*"
           type="file"
-          {...register("image")}
+          disabled={isLoading}
+          {...register("image", { required: "please choose an image" })}
         />
-        {errors?.name?.message && <Error>{errors.name.message}</Error>}
+        {errors?.image?.message && <Error>{errors.image.message}</Error>}
       </FormRow>
 
       <FormRow>
