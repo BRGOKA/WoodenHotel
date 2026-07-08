@@ -17,10 +17,10 @@ export async function deleteCabin(id) {
   }
 }
 export async function addCabin(newCabin) {
-  const { data, error } = await supabase
-    .from("cabin")
-    .insert([newCabin])
-    .select();
+  const imageName = `${Math.random()}-${newCabin.image.name}`.replace("/", "");
+  const imagePath =
+    "https://gkbzwzsvftnfhkcjsbtj.supabase.co/storage/v1/object/public/cabin-images/";
+  const { data, error } = await supabase.from("cabin").insert([newCabin]);
 
   if (error) {
     console.error(error);
