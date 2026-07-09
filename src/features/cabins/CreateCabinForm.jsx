@@ -46,17 +46,12 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ cabin, mode, setShowForm }) {
-  const {
-    id: cabinId,
-    image,
-    name,
-    maxCapacity,
-    regularPrice,
-    discount,
-    descreption,
-  } = cabin;
-  const { register, handleSubmit, reset, getValues, formState } = useForm();
+function CreateCabinForm({ cabin = {} }) {
+  const { id: editId, ...editValues } = cabin;
+  const isEditSession = Boolean(editId);
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: isEditSession ? editValues : {},
+  });
   const { errors } = formState;
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
@@ -84,7 +79,6 @@ function CreateCabinForm({ cabin, mode, setShowForm }) {
         <Input
           type="text"
           id="name"
-          defaultValue={name ?? ""}
           disabled={isLoading}
           {...register("name", {
             required: "this field is required",
@@ -99,7 +93,6 @@ function CreateCabinForm({ cabin, mode, setShowForm }) {
         <Input
           type="number"
           id="maxCapacity"
-          defaultValue={maxCapacity ?? ""}
           disabled={isLoading}
           {...register("maxCapacity", {
             required: "this field is required",
@@ -116,7 +109,6 @@ function CreateCabinForm({ cabin, mode, setShowForm }) {
         <Input
           type="number"
           id="regularPrice"
-          defaultValue={regularPrice ?? ""}
           disabled={isLoading}
           {...register("regularPrice", {
             required: "this field is required",
@@ -133,7 +125,6 @@ function CreateCabinForm({ cabin, mode, setShowForm }) {
         <Input
           type="number"
           id="discount"
-          defaultValue={discount ?? 0}
           disabled={isLoading}
           {...register("discount", {
             required: "this field is required",
@@ -149,7 +140,6 @@ function CreateCabinForm({ cabin, mode, setShowForm }) {
         <Label htmlFor="descreption">Description</Label>
         <Textarea
           id="descreption"
-          defaultValue={descreption ?? ""}
           disabled={isLoading}
           {...register("descreption", { required: "this field is required" })}
         />
@@ -166,7 +156,7 @@ function CreateCabinForm({ cabin, mode, setShowForm }) {
           type="file"
           disabled={isLoading}
           {...register("image", {
-            required: mode === "edit" ? false : "please choose an image",
+            required: isEditSession ? false : "please choose an image",
           })}
         />
         {errors?.image?.message && <Error>{errors.image.message}</Error>}
@@ -174,15 +164,11 @@ function CreateCabinForm({ cabin, mode, setShowForm }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button
-          onClick={() => setShowForm((show) => !show)}
-          variation="secondary"
-          type="reset"
-        >
+        <Button variation="secondary" type="reset">
           Cancel
         </Button>
         <Button disabled={isLoading}>
-          {mode == "edit" ? "Edit Canin" : "Add cabin"}
+          {isEditSession ? "Edit Canin" : "Add cabin"}
         </Button>
       </FormRow>
     </Form>

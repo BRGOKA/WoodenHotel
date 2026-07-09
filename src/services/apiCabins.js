@@ -17,41 +17,37 @@ export async function deleteCabin(id) {
   }
 }
 
-export async function createEditCabin({ data: cabinData, image }) {
-  if (!image) throw new Error("Please select a cabin image");
-
-  const imageName = `${Math.random()}-${image.name}`.replaceAll("/", "");
+export async function createEditCabin({ data: cabinData, id }) {
+  const imageName = `${Math.random()}-${cabinData.image.name}`.replaceAll(
+    "/",
+    "",
+  );
   const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
+  // image upload
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
-    .upload(imageName, image);
+    .upload(imageName, cabinData.image);
 
   if (storageError) {
+    // await supabase.from("cabins").delete().eq("id", cabinData.id);
     console.error(storageError);
     throw new Error("Cabin image could not be uploaded");
   }
 
-  const { data, error } = await supabase
-    .from("cabin")
-    .insert([
-      {
-        ...cabinData,
-        maxCapacity: Number(cabinData.maxCapacity),
-        regularPrice: Number(cabinData.regularPrice),
-        discount: Number(cabinData.discount),
-        descreption: cabinData.descreption ?? "",
-        image: imagePath,
-      },
-    ])
-    .select()
-    .single();
+  // create cabin
+  let query = supabase.from("cabins");
+  query.insert([{ ...cabinData, image: imagePath }]);
+
+  const { data, error } = await query.select().single();
 
   if (error) {
     await supabase.storage.from("cabin-images").remove([imageName]);
     console.error(error);
     throw new Error("Cabin couldnt be created");
   }
+
+  // edit cabin
 
   return data;
 }
