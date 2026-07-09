@@ -78,9 +78,10 @@ function CreateCabinForm({ cabin = {} }) {
   const isWorking = isCreating || isEditing;
 
   function onSubmit(data) {
+    console.log(data);
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if (isEditSession)
-      editCabin({ newCabinData: { ...data, image }, id: editId });
+      editCabin({ newCabinData: { ...data, image: image }, id: editId });
     else createCabin({ data, image });
   }
 
@@ -184,7 +185,7 @@ function CreateCabinForm({ cabin = {} }) {
           Cancel
         </Button>
         <Button disabled={isWorking}>
-          {isEditSession ? "Edit Canin" : "Add cabin"}
+          {isEditSession ? "Edit Cabin" : "Add cabin"}
         </Button>
       </FormRow>
     </Form>

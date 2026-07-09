@@ -19,7 +19,8 @@ export async function deleteCabin(id) {
 }
 
 export async function createEditCabin({ data: cabinData, id }) {
-  const hasImage = cabinData.image?.startsWith?.(supabase);
+  console.log(cabinData);
+  const hasImage = cabinData.image?.startsWith?.(supabaseUrl);
   const imageName = `${Math.random()}-${cabinData.image.name}`.replaceAll(
     "/",
     "",
@@ -34,7 +35,6 @@ export async function createEditCabin({ data: cabinData, id }) {
     .upload(imageName, cabinData.image);
 
   if (storageError) {
-    // await supabase.from("cabins").delete().eq("id", cabinData.id);
     console.error(storageError);
     throw new Error("Cabin image could not be uploaded");
   }
@@ -42,8 +42,8 @@ export async function createEditCabin({ data: cabinData, id }) {
   // create cabin
   let query = supabase.from("cabins");
 
-  if (!id) query.insert([{ ...cabinData, image: imagePath }]);
-  if (id) query.update({ ...cabinData, image: imagePath }).eq("id", id);
+  if (!id) query = query.insert([{ ...cabinData, image: imagePath }]);
+  if (id) query = query.update({ ...cabinData, image: imagePath }).eq("id", id);
   const { data, error } = await query.select().single();
 
   if (error) {
