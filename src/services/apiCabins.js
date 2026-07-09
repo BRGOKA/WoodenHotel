@@ -1,3 +1,4 @@
+import { QueriesObserver } from "@tanstack/react-query";
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function getCabins() {
@@ -18,11 +19,14 @@ export async function deleteCabin(id) {
 }
 
 export async function createEditCabin({ data: cabinData, id }) {
+  const hasImage = cabinData.image?.startsWith?.(supabase);
   const imageName = `${Math.random()}-${cabinData.image.name}`.replaceAll(
     "/",
     "",
   );
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+  const imagePath = hasImage
+    ? cabinData.image
+    : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
   // image upload
   const { error: storageError } = await supabase.storage
@@ -37,8 +41,9 @@ export async function createEditCabin({ data: cabinData, id }) {
 
   // create cabin
   let query = supabase.from("cabins");
-  query.insert([{ ...cabinData, image: imagePath }]);
 
+  if (!id) query.insert([{ ...cabinData, image: imagePath }]);
+  if (id) query.update({ ...cabinData, image: imagePath }).eq("id", id);
   const { data, error } = await query.select().single();
 
   if (error) {
@@ -46,8 +51,6 @@ export async function createEditCabin({ data: cabinData, id }) {
     console.error(error);
     throw new Error("Cabin couldnt be created");
   }
-
-  // edit cabin
 
   return data;
 }
