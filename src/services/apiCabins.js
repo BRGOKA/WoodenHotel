@@ -55,14 +55,11 @@ export async function addCabin({ data: cabinData, image }) {
 
   return data;
 }
-// export async function editCabin(cabinData) {
+
+// export async function editCabin({ data: cabinData, image }) {
 //   const { data, error } = await supabase
 //     .from("cabin")
-//     .insert([newCabin])
+//     .update({ ...cabinData, image: imagePath })
+//     .eq("id", id)
 //     .select();
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Cabin couldnt be created");
-//   }
 // }
