@@ -46,7 +46,16 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm() {
+function CreateCabinForm({ cabin, mode, setShowForm }) {
+  const {
+    id: cabinId,
+    image,
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    descreption,
+  } = cabin;
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
   const queryClient = useQueryClient();
@@ -75,6 +84,7 @@ function CreateCabinForm() {
         <Input
           type="text"
           id="name"
+          defaultValue={name ?? ""}
           disabled={isLoading}
           {...register("name", {
             required: "this field is required",
@@ -89,6 +99,7 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="maxCapacity"
+          defaultValue={maxCapacity ?? ""}
           disabled={isLoading}
           {...register("maxCapacity", {
             required: "this field is required",
@@ -105,6 +116,7 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="regularPrice"
+          defaultValue={regularPrice ?? ""}
           disabled={isLoading}
           {...register("regularPrice", {
             required: "this field is required",
@@ -121,7 +133,7 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="discount"
-          defaultValue={0}
+          defaultValue={discount ?? 0}
           disabled={isLoading}
           {...register("discount", {
             required: "this field is required",
@@ -137,7 +149,7 @@ function CreateCabinForm() {
         <Label htmlFor="descreption">Description</Label>
         <Textarea
           id="descreption"
-          defaultValue=""
+          defaultValue={descreption ?? ""}
           disabled={isLoading}
           {...register("descreption", { required: "this field is required" })}
         />
@@ -160,10 +172,16 @@ function CreateCabinForm() {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button
+          onClick={() => setShowForm((show) => !show)}
+          variation="secondary"
+          type="reset"
+        >
           Cancel
         </Button>
-        <Button disabled={isLoading}>Add cabin</Button>
+        <Button disabled={isLoading}>
+          {mode == "edit" ? "Edit Canin" : "Add cabin"}
+        </Button>
       </FormRow>
     </Form>
   );
