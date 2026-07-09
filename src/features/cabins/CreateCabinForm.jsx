@@ -8,7 +8,7 @@ import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import Textarea from "../../ui/Textarea";
-import { addCabin } from "../../services/apiCabins";
+import { createEditCabin } from "../../services/apiCabins";
 
 const FormRow = styled.div`
   display: grid;
@@ -60,7 +60,7 @@ function CreateCabinForm({ cabin, mode, setShowForm }) {
   const { errors } = formState;
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
-    mutationFn: addCabin,
+    mutationFn: createEditCabin,
     onSuccess: () => {
       toast.success("new cabin created successfully");
       queryClient.invalidateQueries({ queryKey: ["cabins"] });

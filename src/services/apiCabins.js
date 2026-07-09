@@ -17,7 +17,7 @@ export async function deleteCabin(id) {
   }
 }
 
-export async function addCabin({ data: cabinData, image }) {
+export async function createEditCabin({ data: cabinData, image }) {
   if (!image) throw new Error("Please select a cabin image");
 
   const imageName = `${Math.random()}-${image.name}`.replaceAll("/", "");
@@ -40,7 +40,7 @@ export async function addCabin({ data: cabinData, image }) {
         maxCapacity: Number(cabinData.maxCapacity),
         regularPrice: Number(cabinData.regularPrice),
         discount: Number(cabinData.discount),
-        descreption: cabinData.descreption ?? cabinData.descreption ?? "",
+        descreption: cabinData.descreption ?? "",
         image: imagePath,
       },
     ])
@@ -55,11 +55,3 @@ export async function addCabin({ data: cabinData, image }) {
 
   return data;
 }
-
-// export async function editCabin({ data: cabinData, image }) {
-//   const { data, error } = await supabase
-//     .from("cabin")
-//     .update({ ...cabinData, image: imagePath })
-//     .eq("id", id)
-//     .select();
-// }
