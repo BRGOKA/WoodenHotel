@@ -134,15 +134,15 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="description">Description for website</Label>
+        <Label htmlFor="descreption">Description</Label>
         <Textarea
-          id="description"
+          id="descreption"
           defaultValue=""
           disabled={isLoading}
-          {...register("description", { required: "this field is required" })}
+          {...register("descreption", { required: "this field is required" })}
         />
-        {errors?.description?.message && (
-          <Error>{errors.description.message}</Error>
+        {errors?.descreption?.message && (
+          <Error>{errors.descreption.message}</Error>
         )}
       </FormRow>
 
