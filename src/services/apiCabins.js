@@ -21,13 +21,11 @@ export async function createEditCabin({ data: newCabinData, id }) {
   console.log(newCabinData);
 
   const hasImage = newCabinData.image?.startsWith?.(supabaseUrl) ? true : false;
-  console.log(hasImage);
 
   const imageName = `${Math.random()}-${newCabinData.image[0].name}`.replaceAll(
     "/",
     "",
   );
-  console.log(imageName);
 
   const imagePath = hasImage
     ? newCabinData.image
