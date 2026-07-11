@@ -81,7 +81,7 @@ function CreateCabinForm({ cabin = {} }) {
     console.log(data);
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if (isEditSession)
-      editCabin({ newCabinData: { ...data, image: image }, id: editId });
+      editCabin({ newCabinData: { ...data, image }, id: editId });
     else createCabin({ data, image });
   }
 
