@@ -20,15 +20,19 @@ function CabinRow({ cabin }) {
     discount,
     descreption,
   } = cabin;
+  console.log(cabin);
 
   function handleDuplicate() {
     createCabin({
-      name: `Copy of ${name}`,
+      data: {
+        name: `Copy of ${name}`,
+        maxCapacity,
+        regularPrice,
+        discount,
+        descreption,
+        image,
+      },
       image,
-      maxCapacity,
-      regularPrice,
-      discount,
-      descreption,
     });
   }
 
@@ -45,7 +49,7 @@ function CabinRow({ cabin }) {
           <span>&mdash;</span>
         )}
         <div>
-          <button onClick={handleDuplicate}>
+          <button onClick={() => handleDuplicate()}>
             <HiSquare2Stack />
           </button>
           <button onClick={() => setShowForm((show) => !show)}>
