@@ -78,8 +78,6 @@ function CreateCabinForm({ cabin = {} }) {
   const isWorking = isCreating || isEditing;
 
   function onSubmit(data) {
-    console.log(data);
-    console.log(editId);
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if (isEditSession) editCabin({ newCabinData: { data, image, id: editId } });
     else createCabin({ data, image });
@@ -160,7 +158,6 @@ function CreateCabinForm({ cabin = {} }) {
         <Label htmlFor="descreption">Description</Label>
         <Textarea
           id="descreption"
-          disabled={isWorking}
           {...register("descreption", { required: "this field is required" })}
         />
         {errors?.descreption?.message && (
