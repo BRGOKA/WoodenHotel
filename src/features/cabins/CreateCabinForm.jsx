@@ -49,7 +49,7 @@ const Error = styled.span`
 function CreateCabinForm({ cabin = {} }) {
   const { id: editId, ...editValues } = cabin;
   const isEditSession = Boolean(editId);
-  const { register, handleSubmit, reset, getValues, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
@@ -129,6 +129,7 @@ function CreateCabinForm({ cabin = {} }) {
           disabled={isWorking}
           {...register("regularPrice", {
             required: "this field is required",
+            valueAsNumber: true,
             min: { value: 1, message: "price should at least be 1" },
           })}
         />
@@ -145,9 +146,11 @@ function CreateCabinForm({ cabin = {} }) {
           disabled={isWorking}
           {...register("discount", {
             required: "this field is required",
-            validate: (value) =>
-              value <= getValues().regularPrice ||
-              "the discount should be less than the regular price",
+            valueAsNumber: true,
+            validate: (value, formValues) =>
+              formValues.regularPrice === undefined ||
+              value <= formValues.regularPrice ||
+              "the discount should be less than or equal the regular price",
           })}
         />
         {errors?.discount?.message && <Error>{errors.discount.message}</Error>}
