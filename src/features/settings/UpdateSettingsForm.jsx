@@ -1,7 +1,10 @@
+import toast from "react-hot-toast";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
+import Spinner from "../../ui/Spinner";
 import useSettings from "./useSettings";
+import useUpdateSetting from "./useUpdateSettings";
 
 function UpdateSettingsForm() {
   const {
@@ -13,14 +16,38 @@ function UpdateSettingsForm() {
       breakfastPrice,
     } = {},
   } = useSettings();
+
+  const { isUpdating, updateSetting } = useUpdateSetting();
+
+  if (isLoading) return <Spinner />;
+
+  function handleUpdate(e, field) {
+    const { value } = e.target;
+    if (!value) return;
+
+    if (value <= 0) {
+      toast.error(`${field} must be greater than 0`);
+      return;
+    }
+    updateSetting({ [field]: value });
+  }
+
   return (
     <Form>
       <FormRow label="Minimum nights/booking">
-        <Input type="number" id="min-nights" defaultValue={minBookingLength} />
+        <Input
+          type="number"
+          id="min-nights"
+          disabled={isUpdating}
+          defaultValue={minBookingLength}
+          onBlur={(e) => handleUpdate(e, "minBookingLength")}
+        />
       </FormRow>
+
       <FormRow label="Maximum nights/booking">
         <Input type="number" id="max-nights" defaultValue={maxBookingLength} />
       </FormRow>
+
       <FormRow label="Maximum guests/booking">
         <Input
           type="number"
@@ -28,6 +55,7 @@ function UpdateSettingsForm() {
           defaultValue={maxGuestPerBooking}
         />
       </FormRow>
+
       <FormRow label="Breakfast price">
         <Input
           type="number"
