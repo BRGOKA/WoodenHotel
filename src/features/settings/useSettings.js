@@ -10,7 +10,7 @@ function useSettings() {
     queryKey: ["settings"],
     queryFn: getSettings,
   });
-  return { isLoading, error, data: settings };
+  return { isLoading, error, settings };
 }
 
 export default useSettings;
