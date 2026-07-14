@@ -46,7 +46,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ cabin = {} }) {
+function CreateCabinForm({ cabin = {}, onClose }) {
   const { id: editId, ...editValues } = cabin;
   const isEditSession = Boolean(editId);
   const { register, handleSubmit, reset, formState } = useForm({
@@ -67,9 +67,17 @@ function CreateCabinForm({ cabin = {} }) {
     if (isEditSession)
       editCabin(
         { newCabinData: { data, image, id: editId } },
-        { onSuccess: () => reset() },
+        { onSuccess: () => (reset(), onClose?.()) },
       );
-    else createCabin({ data, image }, { onSuccess: () => reset() });
+    else
+      createCabin(
+        { data, image },
+        {
+          onSuccess: () => {
+            (reset(), onClose?.());
+          },
+        },
+      );
   }
 
   function onError() {
@@ -170,7 +178,7 @@ function CreateCabinForm({ cabin = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" onClick={() => onClose?.()}>
           Cancel
         </Button>
         <Button disabled={isWorking}>
