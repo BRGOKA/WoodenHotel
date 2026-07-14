@@ -20,7 +20,6 @@ function CabinRow({ cabin }) {
     discount,
     descreption,
   } = cabin;
-  console.log(cabin);
 
   function handleDuplicate() {
     createCabin({
