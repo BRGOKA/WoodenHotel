@@ -5,6 +5,7 @@ import useDeleteCabin from "./useDeleteCabin";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import useCreateCabin from "./useCreateCabin";
 import Modal from "../../ui/Modal";
+import Menus from "../../ui/Menus";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 
 function CabinRow({ cabin }) {
@@ -73,6 +74,14 @@ function CabinRow({ cabin }) {
             />
           </Modal.Window>
         </Modal>
+        <Menus.Menu>
+          <Menus.Toggle id={cabinId} />
+          <Menus.List id={cabinId}>
+            <Menus.Button>duplicate</Menus.Button>
+            <Menus.Button>edit</Menus.Button>
+            <Menus.Button>delete</Menus.Button>
+          </Menus.List>
+        </Menus.Menu>
       </div>
     </TableRow>
   );
