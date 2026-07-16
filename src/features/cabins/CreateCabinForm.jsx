@@ -46,7 +46,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ cabin = {}, onClose }) {
+function CreateCabinForm({ cabin = {}, onClose, onCloseModal }) {
   const { id: editId, ...editValues } = cabin;
   const isEditSession = Boolean(editId);
   const { register, handleSubmit, reset, formState } = useForm({
@@ -60,22 +60,26 @@ function CreateCabinForm({ cabin = {}, onClose }) {
   // edit cabin
   const { isEditing, editCabin } = useEditCabin();
 
+  const closeModal = onCloseModal ?? onClose;
   const isWorking = isCreating || isEditing;
+
+  function handleClose() {
+    reset();
+    closeModal?.();
+  }
 
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if (isEditSession)
       editCabin(
         { newCabinData: { data, image, id: editId } },
-        { onSuccess: () => (reset(), onClose?.()) },
+        { onSuccess: handleClose },
       );
     else
       createCabin(
         { data, image },
         {
-          onSuccess: () => {
-            (reset(), onClose?.());
-          },
+          onSuccess: handleClose,
         },
       );
   }
@@ -181,9 +185,10 @@ function CreateCabinForm({ cabin = {}, onClose }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset" onClick={() => onClose?.()}>
+        <Button variation="secondary" type="reset" onClick={handleClose}>
           Cancel
         </Button>
+
         <Button disabled={isWorking}>
           {isEditSession ? "Edit Cabin" : "Add cabin"}
         </Button>
