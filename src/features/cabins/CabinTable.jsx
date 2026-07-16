@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import useCabins from "./useCabins";
-import { Menus } from "../../ui/Menus.jsx";
+import Menus from "../../ui/Menus.jsx";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
