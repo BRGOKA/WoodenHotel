@@ -4,7 +4,10 @@ import TableOperations from "../../ui/TableOperations";
 function CabinTableOperations() {
   return (
     <TableOperations>
-      <Filter />
+      <Filter
+        filterField={"discount"}
+        options={["all", "noDiscount", "discount"]}
+      />
     </TableOperations>
   );
 }
