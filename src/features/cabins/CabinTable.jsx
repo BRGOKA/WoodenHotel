@@ -35,14 +35,12 @@ function CabinTable() {
   if (isLoading) return <Spinner />;
   const filterValue = searchParams.get("discount") || "all";
   let filteredCabins;
-  console.log(cabins);
 
-  if (filterValue === "All") filteredCabins = cabins;
+  if (filterValue === "all") filteredCabins = cabins;
   if (filterValue === "noDiscount")
     filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
   if (filterValue === "discount")
     filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
-  console.log(filteredCabins);
   return (
     <Menus>
       <Table role="table">
@@ -54,7 +52,7 @@ function CabinTable() {
           <div>Discount</div>
           <div></div>
         </TableHeader>
-        {filteredCabins.map((cabin) => (
+        {filteredCabins?.map((cabin) => (
           <CabinRow cabin={cabin} key={cabin.id} />
         ))}
       </Table>
