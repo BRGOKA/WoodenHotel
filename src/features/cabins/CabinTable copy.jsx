@@ -55,20 +55,24 @@ function CabinTable() {
 
   return (
     <Menus>
-      <Table columns="0.6fr 1.8fr 2.2fr  1fr 1fr 1fr">
-        <Table.Header>
+      <Table role="table">
+        <TableHeader role="row">
           <div></div>
           <div>Cabin</div>
           <div>Capacity</div>
           <div>Price</div>
           <div>Discount</div>
           <div></div>
-        </Table.Header>
-
-        <Table.Body
-          data={cabins}
-          render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
-        />
+        </TableHeader>
+        {/* {cabins?.map((cabin) => (
+          <CabinRow cabin={cabin} key={cabin.id} />
+        ))} */}
+        {/* {filteredCabins?.map((cabin) => (
+          <CabinRow cabin={cabin} key={cabin.id} />
+        ))} */}
+        {sortedCabins?.map((cabin) => (
+          <CabinRow cabin={cabin} key={cabin.id} />
+        ))}
       </Table>
     </Menus>
   );

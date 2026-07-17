@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import styled from "styled-components";
 
 const StyledTable = styled.div`
@@ -65,21 +65,32 @@ const TableContex = createContext();
 function Table({ columns, children }) {
   return (
     <TableContex.Provider value={columns}>
-      <StyledTable>{children}</StyledTable>
+      <StyledTable role="table">{children}</StyledTable>
     </TableContex.Provider>
   );
 }
 
 function Header({ children }) {
-  return <StyledHeader>{children}</StyledHeader>;
+  const columns = useContext(TableContex);
+  return (
+    <StyledHeader role="row" columns={columns} as={"header"}>
+      {children}
+    </StyledHeader>
+  );
 }
 
 function Row({ children }) {
-  return <StyledRow>{children}</StyledRow>;
+  const columns = useContext(TableContex);
+  return (
+    <StyledRow role="row" columns={columns}>
+      {children}
+    </StyledRow>
+  );
 }
 
-function Body({ children }) {
-  return <StyledBody>{children}</StyledBody>;
+function Body({ render, data }) {
+  if (!data.length) return <Empty>No Data to show</Empty>;
+  return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
 Table.Header = Header;
