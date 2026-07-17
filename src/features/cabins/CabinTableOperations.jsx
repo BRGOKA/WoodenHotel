@@ -15,13 +15,12 @@ function CabinTableOperations() {
       />
       <SortBy
         options={[
-          { value: "default", lable: "Default" },
           { value: "name-asc", lable: "Sort by name (A-Z)" },
           { value: "name-desc", lable: "Sort by name (Z-A)" },
-          { value: "Capacity-asc", lable: "Sort by Capacity (high-low)" },
-          { value: "Capacity-desc", lable: "Sort by Capacity (low-high)" },
-          { value: "Price-asc", lable: "Sort by Price (high-low)" },
-          { value: "Price-desc", lable: "Sort by Price (low-high)" },
+          { value: "maxCapacity-asc", lable: "Sort by Capacity (low-high)" },
+          { value: "maxCapacity-desc", lable: "Sort by Capacity (high-low)" },
+          { value: "regularPrice-asc", lable: "Sort by Price (low-high)" },
+          { value: "regularPrice-desc", lable: "Sort by Price (high-low)" },
         ]}
       />
     </TableOperations>
