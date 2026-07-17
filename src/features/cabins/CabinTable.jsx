@@ -35,26 +35,31 @@ function CabinTable() {
   if (isLoading) return <Spinner />;
   const filterValue = searchParams.get("discount") || "all";
   let filteredCabins;
+  console.log(cabins);
+
   if (filterValue === "All") filteredCabins = cabins;
-  if (filterValue === "")
-    if (filterValue === "")
-      return (
-        <Menus>
-          <Table role="table">
-            <TableHeader role="row">
-              <div></div>
-              <div>Cabin</div>
-              <div>Capacity</div>
-              <div>Price</div>
-              <div>Discount</div>
-              <div></div>
-            </TableHeader>
-            {cabins.map((cabin) => (
-              <CabinRow cabin={cabin} key={cabin.id} />
-            ))}
-          </Table>
-        </Menus>
-      );
+  if (filterValue === "noDiscount")
+    filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
+  if (filterValue === "discount")
+    filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
+  console.log(filteredCabins);
+  return (
+    <Menus>
+      <Table role="table">
+        <TableHeader role="row">
+          <div></div>
+          <div>Cabin</div>
+          <div>Capacity</div>
+          <div>Price</div>
+          <div>Discount</div>
+          <div></div>
+        </TableHeader>
+        {cabins.map((cabin) => (
+          <CabinRow cabin={cabin} key={cabin.id} />
+        ))}
+      </Table>
+    </Menus>
+  );
 }
 
 export default CabinTable;
