@@ -8,7 +8,7 @@ function Bookings() {
         <Heading as="h1">All bookings</Heading>
         <p>TEST</p>
       </Row>
-      <Bookings />
+      {/* <Bookings /> */}
     </>
   );
 }
