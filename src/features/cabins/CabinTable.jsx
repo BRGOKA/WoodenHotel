@@ -46,15 +46,12 @@ function CabinTable() {
   // 2) Sorting
   const sortBy = searchParams.get("sortBy") || "";
   const [field, direction] = sortBy.split("-");
-  console.log(field, direction);
 
   const modifier = direction === "asc" ? 1 : -1;
-  console.log(modifier);
 
   const sortedCabins = filteredCabins.sort(
     (a, b) => (a[field] - b[field]) * modifier,
   );
-  console.log(sortedCabins);
 
   return (
     <Menus>
