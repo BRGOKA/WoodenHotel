@@ -7,6 +7,7 @@ import Table from "../../ui/Table";
 
 function CabinTable() {
   const { isLoading, cabins } = useCabins();
+  console.log(cabins);
   const [searchParams] = useSearchParams();
   if (isLoading) return <Spinner />;
   //1) Filtering
