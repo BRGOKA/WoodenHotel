@@ -37,6 +37,7 @@ const FilterButton = styled.button`
 
 function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const currentFilter = searchParams.get("discount") || options.at(0);
 
   function handleFilter(value) {
     searchParams.set(filterField, value);
@@ -58,6 +59,7 @@ function Filter({ filterField, options }) {
         <FilterButton
           key={option.value}
           onClick={() => handleFilter(option.value)}
+          active={option.value === currentFilter}
         >
           {option.lable}
         </FilterButton>
