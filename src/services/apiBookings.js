@@ -7,6 +7,7 @@ export async function getBookings() {
     console.error(error);
     throw new Error("couldnt fetch bookings");
   }
+  return { data };
 }
 
 export async function getBooking(id) {
