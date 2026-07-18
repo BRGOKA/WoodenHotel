@@ -3,12 +3,13 @@ import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import Spinner from "../../ui/Spinner";
 import useBookings from "./useBookings";
+// import Empty from "../../ui/Empty";
 
 function BookingTable() {
   const { isLoading, bookings } = useBookings();
-  console.log(bookings.data);
 
   if (isLoading) return <Spinner />;
+  // if (!bookings) return <Empty resource={"bookings"} />;
 
   return (
     <Menus>
