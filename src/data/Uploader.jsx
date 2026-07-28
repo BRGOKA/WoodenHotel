@@ -15,13 +15,14 @@ import { guests } from "./data-guests";
 //   breakfastPrice: 15,
 // };
 
+// deleting everything
 async function deleteGuests() {
   const { error } = await supabase.from("guests").delete().gt("id", 0);
   if (error) console.log(error.message);
 }
 
 async function deleteCabins() {
-  const { error } = await supabase.from("cabins").delete().gt("id", 0);
+  const { error } = await supabase.from("cabin").delete().gt("id", 0);
   if (error) console.log(error.message);
 }
 
@@ -30,13 +31,14 @@ async function deleteBookings() {
   if (error) console.log(error.message);
 }
 
+// inserting new mock data
 async function createGuests() {
   const { error } = await supabase.from("guests").insert(guests);
   if (error) console.log(error.message);
 }
 
 async function createCabins() {
-  const { error } = await supabase.from("cabins").insert(cabins);
+  const { error } = await supabase.from("cabin").insert(cabins);
   if (error) console.log(error.message);
 }
 
