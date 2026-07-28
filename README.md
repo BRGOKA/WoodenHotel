@@ -1,3 +1,1 @@
 # WoodenHotel
-
-test
