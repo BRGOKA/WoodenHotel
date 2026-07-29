@@ -66,22 +66,33 @@ function Pagination({ count }) {
     ? 1
     : Number(searchParams.get("page"));
   const pageCount = Math.ceil(count / bookingsPerPage);
-  function nextPage() {}
-  function prevPage() {}
+  function nextPage() {
+    const next = currentPage === pageCount ? currentPage : currentPage + 1;
+    searchParams.set("page", next);
+    setSearchParams(searchParams);
+  }
+  function prevPage() {
+    const prev = currentPage === 1 ? currentPage : currentPage - 1;
+    searchParams.set("page", prev);
+    setSearchParams(searchParams);
+  }
   return (
     <StyledPagination>
       <P>
         Showing <span>1</span> to <span>10</span> out of <span>{count}</span>{" "}
         results
       </P>
-      <Button>
-        <PaginationButton onClick={prevPage}>
+      <Buttons>
+        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
           <HiChevronLeft /> <span>Previous</span>
         </PaginationButton>
-        <PaginationButton onClick={nextPage}>
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === pageCount}
+        >
           <span>Next</span> <HiChevronRight />
         </PaginationButton>
-      </Button>
+      </Buttons>
     </StyledPagination>
   );
 }
