@@ -88,7 +88,7 @@ function Row({ children }) {
   );
 }
 
-function Body({ render, data }) {
+function Body({ render, data = [] }) {
   return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
