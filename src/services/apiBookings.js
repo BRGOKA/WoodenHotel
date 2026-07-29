@@ -3,8 +3,6 @@ import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
 export async function getBookings({ filter, sortBy }) {
-  const queryClient = useQueryClient();
-
   let query = supabase
     .from("bookings")
     .select("*, cabin(name), guests(fullName,email)");

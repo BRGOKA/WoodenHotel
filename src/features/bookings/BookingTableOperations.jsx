@@ -14,7 +14,6 @@ function BookingTableOperations() {
           { value: "unconfirmed", lable: "Unconfirmed" },
         ]}
       />
-
       <SortBy
         options={[
           { value: "startDate-desc", lable: "Sort by date (recent first)" },
