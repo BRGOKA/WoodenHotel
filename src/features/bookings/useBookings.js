@@ -3,6 +3,7 @@ import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
 
 function useBookings() {
+  const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
   // Filter
@@ -19,6 +20,8 @@ function useBookings() {
 
   // Pagination
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
+  // QUERY
   const {
     isLoading,
     data: { data: bookings, count } = {},
@@ -26,6 +29,11 @@ function useBookings() {
   } = useQuery({
     queryKey: ["bookings", filter, sortBy, page],
     queryFn: () => getBookings({ filter, sortBy, page }),
+  });
+  // PREFETCHING
+  queryClient.prefetchQuery({
+    queryKey: ["bookings", filter, sortBy, page + 1],
+    queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
   });
   return { isLoading, bookings, error, count };
 }
