@@ -2,28 +2,36 @@ import { useQueryClient } from "@tanstack/react-query";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 import { DiReact } from "react-icons/di";
+import { quartersInYear } from "date-fns/constants";
+import { bookingsPerPage } from "../utils/constants";
 
-export async function getBookings({ filter, sortBy }) {
+export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
     .from("bookings")
-    .select("*, cabin(name), guests(fullName,email)");
+    .select("*, cabin(name), guests(fullName,email)", { count: "exact" });
 
   // Filter
-  if (filter) {
-    query = query.eq(filter.field, filter.value);
-    if (sortBy)
-      query = query.order(sortBy.field, {
-        ascending: sortBy.direction === "asc",
-      });
-    // queryClient.invalidateQueries({ queryKey: ["bookings"] });
+  if (filter) query = query.eq(filter.field, filter.value);
+
+  // SORT
+  if (sortBy)
+    query = query.order(sortBy.field, {
+      ascending: sortBy.direction === "asc",
+    });
+
+  // Pagination
+  if (page) {
+    const from = (page - 1) * bookingsPerPage;
+    const to = from + bookingsPerPage - 1;
+    query = query.range(from, to);
   }
 
-  const { data, error } = await query;
+  const { data, error, count } = await query;
   if (error) {
     console.error(error);
     throw new Error("couldnt fetch bookings");
   }
-  return data;
+  return { data, count };
 }
 
 export async function getBooking(id) {

@@ -2,6 +2,7 @@ import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import styled from "styled-components";
 import Button from "./Button";
 import { useSearchParams } from "react-router-dom";
+import { bookingsPerPage } from "../utils/constants";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -60,7 +61,6 @@ const PaginationButton = styled.button`
 `;
 
 function Pagination({ count }) {
-  const bookingsPerPage = 10;
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = !searchParams.get("page")
     ? 1
