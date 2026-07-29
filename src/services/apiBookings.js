@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
+import { DiReact } from "react-icons/di";
 
 export async function getBookings({ filter, sortBy }) {
   let query = supabase
@@ -8,9 +9,12 @@ export async function getBookings({ filter, sortBy }) {
     .select("*, cabin(name), guests(fullName,email)");
 
   // Filter
-  if (filter !== null) {
+  if (filter) {
     query = query.eq(filter.field, filter.value);
-
+    if (sortBy)
+      query = query.order(sortBy.field, {
+        ascending: sortBy.direction === "asc",
+      });
     // queryClient.invalidateQueries({ queryKey: ["bookings"] });
   }
 
