@@ -1,4 +1,10 @@
-import { createContext, useContext, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
@@ -71,8 +77,8 @@ function Menus({ children }) {
   const [openId, setOpenId] = useState("");
   const [position, setPosition] = useState(null);
 
-  const close = () => setOpenId("");
-  const open = setOpenId;
+  const close = useCallback(() => setOpenId(""), []);
+  const open = useCallback(setOpenId, []);
 
   return (
     <MenuContext.Provider
