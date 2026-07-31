@@ -13,6 +13,7 @@ import Spinner from "../../ui/Spinner";
 import { useEffect, useState } from "react";
 import Checkbox from "../../ui/Checkbox";
 import { id } from "date-fns/locale";
+import useCheckin from "./useCheckin";
 
 const Box = styled.div`
   /* Box */
@@ -27,6 +28,7 @@ function CheckinBooking() {
   const moveBack = useMoveBack();
 
   const { booking, isLoading } = useBooking();
+  const { checkin, isCheckingIn } = useCheckin();
 
   useEffect(() => {
     setConfirmBooking(booking?.isPaid || false);
@@ -43,7 +45,10 @@ function CheckinBooking() {
     numNights,
   } = booking;
 
-  function handleCheckin() {}
+  function handleCheckin() {
+    if (!confirmBooking) return;
+    checkin(bookingId);
+  }
 
   return (
     <>
@@ -63,10 +68,17 @@ function CheckinBooking() {
         </Checkbox>
       </Box>
       <ButtonGroup>
-        <Button onClick={handleCheckin} disabled={!confirmBooking}>
+        <Button
+          onClick={handleCheckin}
+          disabled={!confirmBooking || isCheckingIn}
+        >
           Check in booking #{bookingId}
         </Button>
-        <Button variation="secondary" onClick={moveBack}>
+        <Button
+          variation="secondary"
+          onClick={moveBack}
+          disabled={!confirmBooking || isCheckingIn}
+        >
           Back
         </Button>
       </ButtonGroup>
