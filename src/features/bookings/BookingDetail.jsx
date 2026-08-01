@@ -15,6 +15,10 @@ import { useNavigate } from "react-router-dom";
 import { HiArrowUpOnSquare } from "react-icons/hi2";
 import useCheckOut from "../check-in-out/useCheckOut";
 import { MdDeleteForever } from "react-icons/md";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import { deleteBooking } from "../../services/apiBookings";
+import useDeleteBooking from "./useDeleteBooking";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -25,6 +29,7 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
   const { booking, isLoading, error } = useBooking();
   const { checkout, isCheckingOut } = useCheckOut();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
   const navigate = useNavigate();
 
   const moveBack = useMoveBack();
@@ -65,13 +70,25 @@ function BookingDetail() {
             Check-Out
           </Button>
         )}
-
-        <Button
-          icon={<MdDeleteForever />}
-          onClick={() => console.log("delete")}
-        >
-          Delete
-        </Button>
+        <Modal>
+          <Modal.Open opens={"delete"}>
+            <Button
+              variation="danger"
+              icon={<MdDeleteForever />}
+              onClick={() => console.log("delete")}
+            >
+              Delete
+            </Button>
+          </Modal.Open>
+          <Modal.Window name={"delete"}>
+            <ConfirmDelete
+              resourceName={"booking"}
+              onConfirm={() => {
+                deleteBooking(bookingId, { onSettled: () => navigate(-1) });
+              }}
+            />
+          </Modal.Window>
+        </Modal>
 
         <Button variation="secondary" onClick={moveBack}>
           Back
