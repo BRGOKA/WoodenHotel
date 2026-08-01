@@ -14,6 +14,7 @@ import Spinner from "../../ui/Spinner";
 import { useNavigate } from "react-router-dom";
 import { HiArrowUpOnSquare } from "react-icons/hi2";
 import useCheckOut from "../check-in-out/useCheckOut";
+import { MdDeleteForever } from "react-icons/md";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -51,7 +52,7 @@ function BookingDetail() {
 
       <ButtonGroup>
         {status === "unconfirmed" && (
-          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
+          <Button $danger onClick={() => navigate(`/checkin/${bookingId}`)}>
             Check-in
           </Button>
         )}
@@ -64,6 +65,13 @@ function BookingDetail() {
             Check-Out
           </Button>
         )}
+
+        <Button
+          icon={<MdDeleteForever />}
+          onClick={() => console.log("delete")}
+        >
+          Delete
+        </Button>
 
         <Button variation="secondary" onClick={moveBack}>
           Back
