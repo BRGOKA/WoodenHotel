@@ -9,6 +9,7 @@ import { formatDistanceFromNow } from "../../utils/helpers";
 import Menus from "../../ui/Menus";
 import { HiArrowDownOnSquare, HiArrowUpOnSquare, HiEye } from "react-icons/hi2";
 import useCheckOut from "../check-in-out/useCheckOut";
+import { useNavigate } from "react-router-dom";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -57,6 +58,7 @@ function BookingRow({
     "checked-out": "silver",
   };
   const { checkout, isCheckingOut } = useCheckOut();
+  const navigate = useNavigate();
 
   return (
     <Table.Row>
