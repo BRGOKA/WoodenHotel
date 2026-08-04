@@ -13,9 +13,12 @@ function SignupForm() {
     getValues,
     formState: { errors },
   } = useForm();
+
+  function onSubmit(data) {}
+
   return (
-    <Form>
-      <FormRow label="Full name" error={""}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormRow label="Full name" error={errors?.fullName?.message}>
         <Input
           type="text"
           id="fullName"
@@ -23,7 +26,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="Email address" error={""}>
+      <FormRow label="Email address" error={errors?.email?.message}>
         <Input
           type="email"
           id="email"
@@ -37,7 +40,10 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="Password (min 8 characters)" error={""}>
+      <FormRow
+        label="Password (min 8 characters)"
+        error={errors?.password?.message}
+      >
         <Input
           type="password"
           id="password"
@@ -51,15 +57,17 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="Confirm password" error={""}>
+      <FormRow
+        label="Confirm password"
+        error={errors?.passwordConfirm?.message}
+      >
         <Input
           type="password"
           id="passwordConfirm"
           {...register("passwordConfirm", {
             required: "This field is required",
-            validate: (value) => {
-              value === getValues().password || "Passwords need to match";
-            },
+            validate: (value) =>
+              value === getValues().password || "Passwords need to match",
           })}
         />
       </FormRow>
