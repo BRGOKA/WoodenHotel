@@ -7,7 +7,6 @@ function useSignup() {
   const { mutate: createUser, isLoading } = useMutation({
     mutationFn: signup,
     onSuccess: (user) => {
-      console.log(user);
       toast.success("new user created successfully");
     },
     onError: (err) => toast.error(err.message),
