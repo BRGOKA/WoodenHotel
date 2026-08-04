@@ -5,13 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 export function useLogin() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { mutate: login, isLoading: isLoginIn } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      queryClient.setQueryData(["user"], data.user);
       navigate("/dashboard", { replace: true });
     },
-    onError: (err) => toast.error("Provided email or password are incorrect"),
+    onError: (err) => toast.error(err.message),
   });
   return { login, isLoginIn };
 }
