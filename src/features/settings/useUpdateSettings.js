@@ -12,7 +12,6 @@ function useUpdateSetting() {
     },
     onError: (err) => toast.error(err.message),
   });
-  console.log(isUpdating);
   return { updateSetting, isUpdating };
 }
 

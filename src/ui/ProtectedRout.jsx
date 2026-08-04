@@ -17,7 +17,6 @@ function ProtectedRout({ children }) {
 
   // TODO:Load autherized users
   const { isAuthenticated, isLoading } = useUser();
-  console.log(isAuthenticated);
 
   // TODO: if no authed user redirect to log in page
   useEffect(
