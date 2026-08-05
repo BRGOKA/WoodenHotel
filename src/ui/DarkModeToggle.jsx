@@ -1,22 +1,14 @@
 import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi2";
 import ButtonIcon from "./ButtonIcon";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useDarkMode } from "../context/DarkModeContext";
 
 function DarkModeToggle() {
-  const [darkMode, setDarkMode] = useState(false);
-  function handleDarkMode() {
-    setDarkMode((state) => !state);
-  }
-  useEffect(
-    function () {
-      if (darkMode) document.documentElement.classList.add("dark-mode");
-      else document.documentElement.classList.remove("dark-mode");
-    },
-    [darkMode],
-  );
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
+
   return (
-    <ButtonIcon onClick={handleDarkMode}>
-      {darkMode ? <HiOutlineMoon /> : <HiOutlineSun />}
+    <ButtonIcon onClick={() => toggleDarkMode()}>
+      {isDarkMode ? <HiOutlineMoon /> : <HiOutlineSun />}
     </ButtonIcon>
   );
 }
