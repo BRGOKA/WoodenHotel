@@ -9,7 +9,10 @@ const StyledDashboardLayout = styled.div`
 function DashboardLayout() {
   return (
     <StyledDashboardLayout>
-      <div>dashboard</div>
+      <div>statestics</div>
+      <div>Today's activity</div>
+      <div>Chart stay duration</div>
+      <div>Chart sales</div>
     </StyledDashboardLayout>
   );
 }
