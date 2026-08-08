@@ -32,7 +32,6 @@ function UpdateSettingsForm() {
     updateSetting({ [field]: value });
     console.log("updated ", field);
   }
-  console.log(isUpdating);
 
   return (
     <Form>
