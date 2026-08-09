@@ -7,12 +7,21 @@ import {
 import Stat from "./Stat";
 import { formatCurrency } from "../../utils/helpers";
 
-function Stats({ bookings, confirmedStays }) {
+function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
   // 1. bookings stat
   const numBookings = bookings?.length;
 
   // 2.sales stat
   const sales = bookings.reduce((acc, cur) => acc + cur.totalPrice, 0);
+
+  // 3.total check-ins
+  const checkins = confirmedStays.length;
+
+  // 4.Occupation rate
+  const occupation = confirmedStays.reduce(
+    (acc, cur) => acc + cur.numNights,
+    0,
+  );
 
   return (
     <>
@@ -32,7 +41,7 @@ function Stats({ bookings, confirmedStays }) {
         title={"Check-ins"}
         color={"indigo"}
         icon={<HiOutlineCalendarDays />}
-        value={numBookings}
+        value={checkins}
       />
       <Stat
         title={"Occupancy rate"}

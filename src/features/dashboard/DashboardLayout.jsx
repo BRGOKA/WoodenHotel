@@ -11,12 +11,17 @@ const StyledDashboardLayout = styled.div`
   gap: 2.4rem;
 `;
 function DashboardLayout() {
-  const { isLoading, bookings } = useRecentBookings();
+  const { isLoading, bookings, numDays } = useRecentBookings();
+
   const { isLoading: isLoading1, confirmedStays } = useRecentStays();
   if (isLoading || isLoading1) return <Spinner />;
   return (
     <StyledDashboardLayout>
-      <Stats bookings={bookings} confirmedStays={confirmedStays} />
+      <Stats
+        bookings={bookings}
+        confirmedStays={confirmedStays}
+        numDays={numDays}
+      />
       <div>Today's activity</div>
       <div>Chart stay duration</div>
       <div>Chart sales</div>
