@@ -8,7 +8,6 @@ import Stat from "./Stat";
 import { formatCurrency } from "../../utils/helpers";
 
 function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
-  console.log(numDays);
   // 1. bookings stat
   const numBookings = bookings?.length;
 
