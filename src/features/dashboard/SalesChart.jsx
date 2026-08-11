@@ -88,12 +88,11 @@ function SalesChart({ bookings, numDays }) {
         .reduce((acc, cur) => acc + cur.extrasPrice, 0),
     };
   });
-  console.log(data);
   return (
     <StyledSalesChart>
       <Heading as="h2">Sales</Heading>{" "}
       <ResponsiveContainer height={300} width="100%">
-        <AreaChart data={fakeData}>
+        <AreaChart data={data}>
           <CartesianGrid />
           <Tooltip contentStyle={{ background: colors.background }} />
           <XAxis
