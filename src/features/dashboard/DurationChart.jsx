@@ -1,4 +1,13 @@
 import styled from "styled-components";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+import Heading from "../../ui/Heading";
 
 const ChartBox = styled.div`
   /* Box */
@@ -132,7 +141,39 @@ function prepareData(startData, stays) {
 }
 
 function DurationChart({ confirmedStays }) {
-  return <ChartBox>chart</ChartBox>;
+  return (
+    <ChartBox>
+      <Heading as="h2">stays duration summary</Heading>
+      <ResponsiveContainer>
+        <PieChart>
+          <Tooltip />
+          <Pie
+            data={startDataLight}
+            nameKey="duration"
+            dataKey={"value"}
+            innerRadius={85}
+            outerRadius={110}
+          >
+            {startDataLight.map((entry) => (
+              <Cell
+                fill={entry.color}
+                stroke={entry.color}
+                key={entry.duration}
+              />
+            ))}
+          </Pie>
+          <Legend
+            verticalAlign="middle"
+            align="right"
+            width="30%"
+            layout="vertical"
+            iconSize={15}
+            iconType="circle "
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  );
 }
 
 export default DurationChart;
