@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from "recharts";
 import Heading from "../../ui/Heading";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const ChartBox = styled.div`
   /* Box */
@@ -30,22 +31,22 @@ const ChartBox = styled.div`
 const startDataLight = [
   {
     duration: "1 night",
-    value: 3,
+    value: 0,
     color: "#ef4444",
   },
   {
     duration: "2 nights",
-    value: 5,
+    value: 0,
     color: "#f97316",
   },
   {
     duration: "3 nights",
-    value: 2,
+    value: 0,
     color: "#eab308",
   },
   {
     duration: "4-5 nights",
-    value: 7,
+    value: 0,
     color: "#84cc16",
   },
   {
@@ -55,7 +56,7 @@ const startDataLight = [
   },
   {
     duration: "8-14 nights",
-    value: 1,
+    value: 0,
     color: "#14b8a6",
   },
   {
@@ -65,7 +66,7 @@ const startDataLight = [
   },
   {
     duration: "21+ nights",
-    value: 1,
+    value: 0,
     color: "#a855f7",
   },
 ];
@@ -141,20 +142,23 @@ function prepareData(startData, stays) {
 }
 
 function DurationChart({ confirmedStays }) {
+  const { isDarkMode } = useDarkMode();
+  const startData = isDarkMode ? startDataDark : startDataLight;
+  const durationData = prepareData(startData, confirmedStays);
   return (
     <ChartBox>
       <Heading as="h2">stays duration summary</Heading>
-      <ResponsiveContainer>
+      <ResponsiveContainer width={"100%"} height={240}>
         <PieChart>
           <Tooltip />
           <Pie
-            data={startDataLight}
+            data={durationData}
             nameKey="duration"
             dataKey={"value"}
             innerRadius={85}
             outerRadius={110}
           >
-            {startDataLight.map((entry) => (
+            {durationData.map((entry) => (
               <Cell
                 fill={entry.color}
                 stroke={entry.color}
